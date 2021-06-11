@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  outline:none
+}
+
+body {
+  background-color: #fafafa;
+}
+
+.container {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.inputStyle{
+  margin-top:20px;
+  width:300px;
+  height:40px;
+  font-size: 20px;
+}
+
+.username:hover {
+  text-decoration: underline;
+}
+
+.circle {
+  border-radius: 50%;
+ height: 100px;
+ width: 100px;
+ overflow: hidden;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+}
