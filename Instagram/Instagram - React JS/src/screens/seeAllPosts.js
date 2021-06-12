@@ -1,12 +1,9 @@
 import { useState,useContext, useEffect } from 'react';
 import '../App.css';
-import {Context} from '../context/dataContext'
 import {getToken,getPosts,apiLink,getUser} from '../context/helperFunctions'
-import {FaComment, GrClose} from 'react-icons/all'
-import Like from '../components/like'
+import {IoAddCircleOutline, GrClose,AiFillCompass} from 'react-icons/all'
 import {useHistory} from 'react-router-dom'
 import ViewPost from '../components/viewPost';
-import {AiFillCompass} from 'react-icons/all'
 
 function Home() {
     const token = getToken()
@@ -35,10 +32,13 @@ function Home() {
       <nav style={{display:"flex",justifyContent:"space-evenly",width:"100%",marginTop:20}}>
         <h1 onClick={() => history.push("/home")}>Instagram</h1>
         <div style={{alignItems:"center",display:"flex"}}>
+          <div onClick={() => history.push("/addPost")} style={{marginRight:10}}>
+              <IoAddCircleOutline size={35} />
+          </div>
           <div onClick={() => history.push("/allPosts")} style={{marginRight:10}}>
             <AiFillCompass size={35} />
           </div>
-          <img               
+          {me.profilePhoto && <img               
               onClick={() => history.push({
                   pathname: `/profile`,
                   state: { userId: me._id }
@@ -46,12 +46,14 @@ function Home() {
               src={`${apiLink}/images/${me.profilePhoto}`} 
               style={{width:30,height:30,borderRadius:"50%"}} 
               />
+            }
         </div>
       </nav>
+      <h2 style={{textAlign:"center",margin:"10px 0"}}>See all posts</h2>
       <div style={{display:"flex",flexWrap:"wrap"}}>
         {posts.map((el,index) => {
           return <div key={index} style={{}}>
-            <img onClick={() => {setSeePost(el);setViewPost(true)}} src={`${apiLink}/images/${el.photoName}`} style={{width:300,height:300}} />
+            <img onClick={() => {setSeePost(el);setViewPost(true)}} src={`${apiLink}/images/${el.photoName}`} style={{width:300,height:300,objectFit:"cover",margin:1}} />
           </div>
           })}
         </div>

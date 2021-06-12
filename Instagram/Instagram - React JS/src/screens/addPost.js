@@ -21,7 +21,7 @@ const AddPost = () => {
     return <div style={{display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",flex:1}}>
         <input onInput={(e) => setDesc(e.target.value)} style={{marginBottom:20}} className="inputStyle" type="text" />
         <input onInput={e => setFile(e.target.files[0])} type="file" />
-        <button onClick={() => addPost(data , token)} style={{padding:10}}>Add</button>
+        <button onClick={() => {addPost(data , token);history.push("/home")}} style={{padding:10}}>Add</button>
     </div>
 }
 

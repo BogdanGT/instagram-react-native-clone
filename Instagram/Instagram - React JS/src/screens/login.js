@@ -31,6 +31,8 @@ function Login() {
         <input placeholder="password" onInput={(e) => setPassword(e.target.value)} type="password" className="inputStyle"  />
       </div>
       <button style={{padding:"10px 30px 10px 30px"}} onClick={() => login({email,password} , () => history.push("/home"))}>LOGIN</button>
+
+      <h3 style={{cursor:"pointer",marginTop:100}} onClick={() => history.push("/register")}>Register</h3>
     </div>
   );
 }

@@ -48,18 +48,12 @@ export const getAllPostsFromUser = async (id,token) => {
 
     return data
 }
-export const getFollowing = async (id) => {
-    const config = {
-        headers:{
-            "x-auth-token":glToken
-        }
-    }
-
+export const getFollowing = async (id,token) => {
     console.log("following")
     const data = await fetch(`/auth/getFollowing/${id}` , {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
-            "x-auth-token" : glToken
+            "x-auth-token" : token
         }
     })
         .then(response => response.json())
@@ -68,12 +62,12 @@ export const getFollowing = async (id) => {
     return data
 }
 
-export const getFollowers = async (id) => {
+export const getFollowers = async (id,token) => {
     console.log("followers")
     const data = await fetch(`/auth/getFollowers/${id}` , {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
-            "x-auth-token" : glToken
+            "x-auth-token" : token
         }
     })
         .then(response => response.json())

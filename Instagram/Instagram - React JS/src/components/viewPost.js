@@ -30,9 +30,9 @@ const ViewPost = (props) => {
     const followBtn = () => {
         if(seePost.user._id != user._id){
             if(animFollow){
-                return <div onClick={() => {followUser(seePost.user._id,token);setAnimFollow(false)}}>UNFOLLOW</div>
+                return <div style={{cursor:"pointer"}} onClick={() => {followUser(seePost.user._id,token);setAnimFollow(false)}}>UNFOLLOW</div>
             }else {
-                return <div onClick={() => {followUser(seePost.user._id,token);setAnimFollow(true)}}>FOLLOW</div>
+                return <div style={{cursor:"pointer"}} onClick={() => {followUser(seePost.user._id,token);setAnimFollow(true)}}>FOLLOW</div>
             }
         }
     }
@@ -47,7 +47,7 @@ const ViewPost = (props) => {
 
 
     return <div style={{display:"flex"}}>
-        <img src={`${apiLink}/images/${seePost.photoName}`} style={{width:600,height:600,backgroundColor:"red"}} />
+        <img src={`${apiLink}/images/${seePost.photoName}`} style={{width:600,height:600,backgroundColor:"red",objectFit:"cover"}} />
         <div style={{width:350,height:600,backgroundColor:"white"}}>
             <div style={{display:"flex",alignItems:"center",justifyContent:"space-between"}}>
                 <div style={{display:"flex",margin:10}}>

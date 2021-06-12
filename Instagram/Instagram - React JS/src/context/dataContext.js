@@ -101,7 +101,7 @@ const followUser = dispatch => {
 }
 
 const addPost = dispatch => {
-    return async (data,token) => {
+    return async (data,token,callback) => {
         console.log(data)
         await fetch(`/post` , {
             method: 'POST',
@@ -113,8 +113,8 @@ const addPost = dispatch => {
         .then(response => response.json())
         .then(res => {
             console.log(res.token)
-
         });
+        callback()
     }
 }
 

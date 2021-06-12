@@ -57,7 +57,7 @@ function Home() {
               <img src={`${apiLink}/images/${el.user.profilePhoto}`} style={{width:50,height:50,borderRadius:"50%"}} />
               <h3 style={{alignSelf:"center",marginLeft:10}}>{el.user.username}</h3>
             </div>
-            <img src={`${apiLink}/images/${el.photoName}`} style={{width:600,height:600}} />
+            <img src={`${apiLink}/images/${el.photoName}`} style={{width:600,height:600,objectFit:"cover"}} />
             <div>
               {me.likedPosts ? isLiked = me.likedPosts.includes(el._id) : null}
               {console.log(isLiked)}

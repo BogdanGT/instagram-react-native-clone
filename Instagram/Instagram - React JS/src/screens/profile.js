@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
 import { getUser,getAllPostsFromUser,apiLink,getToken } from '../context/helperFunctions'
 import ViewPost from '../components/viewPost'
-import {GrClose} from 'react-icons/all'
+import {GrClose,IoAddCircleOutline,AiFillCompass} from 'react-icons/all'
 import Following from '../components/following'
 import Followers from '../components/followers'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -36,19 +36,43 @@ const Profile = () => {
     
 
     return <div>
-        {user.profilePhoto && <img src={`${apiLink}/images/${user.profilePhoto}`} style={{width:150,height:150,borderRadius:100}} />}
+              <nav style={{display:"flex",justifyContent:"space-evenly",width:"100%",marginTop:20}}>
+        <h1 onClick={() => history.push("/home")}>Instagram</h1>
+        <div style={{display:"flex"}}>
+          <div onClick={() => history.push("/addPost")} style={{marginRight:10}}>
+            <IoAddCircleOutline size={35} />
+          </div>
+          <div onClick={() => history.push("/allPosts")} style={{marginRight:10}}>
+            <AiFillCompass size={35} />
+          </div>
+          {user.profilePhoto && <img 
+              onClick={() => history.push({
+                  pathname: `/profile`,
+                  state: { userId: user._id }
+              })} 
+              src={`${apiLink}/images/${user.profilePhoto}`} 
+              style={{width:30,height:30,borderRadius:"50%",alignSelf:"center"}} 
+            />}
+        </div>
+      </nav>
+      <div style={{display:"flex",justifyContent:"space-evenly",margin:"20px 0px 20px 35px"}}>
+        {user.profilePhoto && <img src={`${apiLink}/images/${user.profilePhoto}`} style={{width:150,height:150,borderRadius:100,objectFit:"cover"}} />}
+        <div>
         <h1>{user.username}</h1>
         <h1>{user.email}</h1>
-        <button onClick={() => {history.push("/");cookies.remove("token")}} style={{border:"none",backgroundColor:"blue",color:"white",margin:"0 auto",display:"block",padding:20}}>LOGOUT</button>
-        <div style={{display:"flex",justifyContent:"space-evenly",margin:"20px 0 20px 0"}}>
+        <div style={{display:"flex",justifyContent:"space-between",margin:"20px 0 20px 0",width:500}}>
             <h2>{userPosts && userPosts.length} postari</h2>
-            <h2 onClick={() => {setFollowersOn(true)}}>{user.followers} de urmaritori</h2>
-            <h2 onClick={() => {setFollowingOn(true)}}>{user.following} de urmariri</h2>
+            <h2 style={{cursor:"pointer"}} onClick={() => {setFollowersOn(true)}}>{user.followers} followers</h2>
+            <h2 style={{cursor:"pointer"}} onClick={() => {setFollowingOn(true)}}>{user.following} following</h2>
         </div>
-        <div style={{display:"flex",width:900,flexWrap:"wrap",margin:"0 auto"}}>
+        <button onClick={() => {history.push("/");cookies.remove("token")}} style={{border:"none",backgroundColor:"red",color:"white",margin:"10px auto",display:"block",padding:10,fontWeight:"bold",borderRadius:5}}>LOGOUT</button>
+      </div>
+    </div>
+
+        <div style={{display:"flex",width:906,flexWrap:"wrap",margin:"0 auto"}}>
             {userPosts && userPosts.map((el,index) => {
                 return <div key={index} onClick={() => {setPostOn(true);setSeePost(...seePost , el)}}>
-                    <img src={`${apiLink}/images/${el.photoName}`} style={{width:300,height:300,objectFit:"fill"}} />
+                    <img src={`${apiLink}/images/${el.photoName}`} style={{width:300,height:300,objectFit:"cover",margin:1}} />
                 </div>
             })}
         </div>
