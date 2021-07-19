@@ -1,6 +1,8 @@
 import React,{useEffect,useState} from 'react'
 import {View,Text,Image, FlatList, TouchableOpacity,Dimensions} from 'react-native'
 import {apiLink,getUser,getAllPostsFromUser} from '../context/helperFunctions'
+import KeyChain from 'react-native-keychain'
+
 
 const {width} = Dimensions.get("window")
 
@@ -16,20 +18,39 @@ const Profile = (props) => {
         setUserPosts(await getAllPostsFromUser(user._id))
     },[user])
     
-    return <View>
-        <Text>{user.username}</Text>
-        <Image source={{uri:`${apiLink}/images/${user.profilePhoto}`}} style={{width:100,height:100,borderRadius:100}} />
-        <Text>{user.email}</Text>
-        <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
-            <Text>{userPosts.length} posts</Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowers" , {userId:user._id})}>
-                <Text>{user.followers} urmaritori</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowed" , {userId:user._id})}>
-                <Text>{user.following} urmariri</Text>
+    return <View style={{backgroundColor:"white",flex:1}}>
+        <Text style={{fontFamily:"Roboto-Bold", fontSize:20,textAlign:"center"}}>Profile</Text>
+        <View style={{flexDirection:"row"}}>
+            <View>
+                <Image source={{uri:`${apiLink}/images/${user.profilePhoto}`}} style={{width:80,height:80,borderRadius:100,margin:10}} />
+                <Text style={{textAlign:"center",fontWeight:"bold"}}>{user.username}</Text>
+            </View>
+            <View style={{flexDirection:"row",justifyContent:"space-around",flex:1,alignItems:"center",marginBottom:30,alignSelf:"center"}}>
+                <View style={{flexDirection:"column"}}>
+                    <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>{userPosts.length}</Text>
+                    <Text style={{fontFamily:"Roboto-Bold"}}>posts</Text>
+                </View>
+                <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowers" , {userId:user._id})}>
+                <View style={{flexDirection:"column"}}>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>{user.followers}</Text>
+                        <Text style={{fontFamily:"Roboto-Bold"}}>followers</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowed" , {userId:user._id})}>
+                    <View style={{flexDirection:"column"}}>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>{user.following}</Text>
+                        <Text style={{fontFamily:"Roboto-Bold"}}>following</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        </View>
+        <View style={{alignSelf:"flex-end",marginRight:5}}>
+            <TouchableOpacity onPress={async () => await KeyChain.resetGenericPassword().then(() => props.navigation.navigate("Login"))}>
+                <Text style={{backgroundColor:"red",padding:5,borderRadius:5,color:"white",fontWeight:"bold"}}>LOGOUT</Text>
             </TouchableOpacity>
         </View>
         <FlatList 
+            style={{marginTop:20}}
             numColumns={3}
             data={userPosts}
             keyExtractor={el => el._id}

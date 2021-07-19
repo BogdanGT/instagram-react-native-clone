@@ -41,8 +41,8 @@ const AddComment = (props) => {
                         <Text style={{marginLeft:5}}>{item.comment}</Text>
                     </View>
                     {item.userId == user._id && <TouchableOpacity onPress={() => deleteComment({postId , commentId:item._id} , token)}>
-                        <Text style={{marginRight:10}}>
-                            Del
+                        <Text style={{marginRight:10,backgroundColor:"red",borderRadius:5,padding:5,color:"white",fontWeight:"bold"}}>
+                            DELETE
                         </Text>
                     </TouchableOpacity>
                     }

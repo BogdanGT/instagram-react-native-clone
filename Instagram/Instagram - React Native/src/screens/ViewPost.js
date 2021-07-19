@@ -38,11 +38,11 @@ const ViewPost = (props) => {
         if(item.user._id != user._id){
             if(animFollow){
                 return <TouchableOpacity onPress={async () => {followUser(item.user._id,token);setAnimFollow(false)}}>
-                    <Text>UNFOLLOW</Text>
+                    <Text style={{backgroundColor:"#19b5fe",borderRadius:5,padding:5,color:"white",fontWeight:"bold"}}>UNFOLLOW</Text>
                 </TouchableOpacity>
             }else{
                 return <TouchableOpacity onPress={async () => {followUser(item.user._id,token);setAnimFollow(true)}}>
-                    <Text>FOLLOW</Text>
+                    <Text style={{backgroundColor:"#19b5fe",borderRadius:5,padding:5,color:"white",fontWeight:"bold"}}>FOLLOW</Text>
                 </TouchableOpacity>
             }
         }else{
@@ -63,12 +63,12 @@ const ViewPost = (props) => {
             <View style={{flexDirection:"row",marginHorizontal:10,marginVertical:5}}>
                 <Image source={{uri:`${apiLink}/images/${item.user.profilePhoto}`}} style={{width:35,height:35,backgroundColor:"black",borderRadius:25}} />
                 <TouchableOpacity style={{alignSelf:"center"}} onPress={() => checkUser()}>
-                    <Text style={{marginLeft:5}}>{item.user.username}</Text>
+                    <Text style={{marginLeft:5,fontWeight:"bold"}}>{item.user.username}</Text>
                 </TouchableOpacity>
             </View>
             {followBtn()}
-            {item.user._id == user._id && <TouchableOpacity onPress={() => deletePost(item._id ,token)}>
-                <Text>Delete</Text>
+            {item.user._id == user._id && <TouchableOpacity onPress={() => deletePost(item._id ,token , () => props.navigation.navigate("Profile"))}>
+                <Text style={{backgroundColor:"red",borderRadius:5,padding:5,color:"white",fontWeight:"bold"}}>DELETE</Text>
             </TouchableOpacity> 
             }
             
@@ -81,9 +81,9 @@ const ViewPost = (props) => {
                 <Icon2 name="comment-o" size={25} style={{marginLeft:10}} />
             </TouchableOpacity>
         </View>
-        <Text style={{marginLeft:10}}>{item.description}</Text>
+        <Text style={{marginLeft:10,fontFamily:"Roboto-Bold"}}>{item.description}</Text>
         <TouchableOpacity onPress={() => props.navigation.navigate("WhoLikes" , {whoLikes : item.whoLikes})}>
-            <Text style={{marginLeft:10}}>{item.like} aprecieri</Text>
+            <Text style={{marginLeft:10,fontFamily:"Roboto-Bold"}}>{item.like} aprecieri</Text>
         </TouchableOpacity>
     </View>
 }

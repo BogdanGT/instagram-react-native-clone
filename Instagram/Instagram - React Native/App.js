@@ -2,6 +2,9 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native'
 import {createStackNavigator} from '@react-navigation/stack'
 import {createBottomTabNavigator} from  '@react-navigation/bottom-tabs'
+import Icon from 'react-native-vector-icons/AntDesign'
+import Icon2 from 'react-native-vector-icons/Ionicons'
+
 
 import Login from './src/screens/Login'
 import Register from './src/screens/Register'
@@ -15,6 +18,8 @@ import YourFollowed from './src/screens/YourFollowed'
 import AddComment from './src/screens/addComment'
 import UserProfile from './src/screens/UserProfile'
 import YourFollowers from './src/screens/YourFollowers'
+import Chat from "./src/screens/Chat"
+import Conversation from './src/screens/Conversation';
 
 import {Provider} from './src/context/createDataContext'
 
@@ -23,10 +28,22 @@ const Tab = createBottomTabNavigator()
 
 const HomeScreen = () => {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Search" component={Search} />
-      <Tab.Screen name="Profile" component={Profile} />
+    <Tab.Navigator 
+      tabBarOptions={{
+        activeTintColor:"#f78138",
+        inactiveTintColor:"grey",
+        showLabel:false,
+        activeBackgroundColor:"white",
+        inactiveBackgroundColor:"white",
+        style:{
+          borderTopWidth:0
+        }
+      }}
+    >
+      <Tab.Screen options={{tabBarIcon:() => <Icon name="home" size={25}></Icon>}} name="Home" component={Home} />
+      <Tab.Screen options={{tabBarIcon:() => <Icon name="search1" size={25}></Icon>}} name="Search" component={Search} />
+      <Tab.Screen options={{tabBarIcon:() => <Icon2 name="person-outline" size={25}></Icon2>}} name="Profile" component={Profile} />
+      <Tab.Screen options={{tabBarIcon:() => <Icon2 name="chatbubble-ellipses-outline" size={25}></Icon2>}} name="Chat" component={Chat} />
     </Tab.Navigator>
   )
 }
@@ -45,6 +62,7 @@ const App = () => {
         <Stack.Screen name="AddComment" component={AddComment} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="YourFollowers" component={YourFollowers} />
+        <Stack.Screen name="Conversation" component={Conversation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

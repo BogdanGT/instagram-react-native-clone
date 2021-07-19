@@ -15,7 +15,7 @@ const YourFollowers = (props) => {
     const checkUser = (itemId) => {
         console.log(userId , itemId)
         if(meId != itemId){
-            props.navigation.navigate("UserProfile" , {userId})
+            props.navigation.navigate("UserProfile" , {userId:itemId})
             console.log("el")
         }else{
             props.navigation.navigate("Profile" , {userId})
@@ -24,13 +24,14 @@ const YourFollowers = (props) => {
     }
 
     return <View>
+        <Text style={{textAlign:"center",fontSize:20,fontWeight:"bold"}}>Followers</Text>
         <FlatList 
             data={user}
-            keyExtractor={el => el.id}
+            keyExtractor={el => el._id}
             renderItem={({item}) => {
                 return <View style={{flexDirection:"row" , alignItems:"center",marginVertical:5,marginHorizontal:10}}>
-                    <Image source={{uri:`${apiLink}/images/${item.photo}`}} style={{width:50,height:50,borderRadius:25}} />
-                    <TouchableOpacity onPress={() => checkUser(item.id)}>
+                    <Image source={{uri:`${apiLink}/images/${item.profilePhoto}`}} style={{width:50,height:50,borderRadius:25}} />
+                    <TouchableOpacity onPress={() => checkUser(item._id)}>
                         <Text style={{marginLeft:10}}>{item.username}</Text>
                     </TouchableOpacity>
                 </View>

@@ -20,7 +20,7 @@ const Login = (props) => {
     return <View style={{flex:1,justifyContent:"center",marginBottom:200}}>
         <Text style={{textAlign:"center",fontSize:25,marginBottom:20}}>Login</Text>
         <TextInput onChangeText={setEmail} style={{width:null,height:40,borderWidth:1}} placeholder="Email" />
-        <TextInput onChangeText={setPassword} style={{width:null,height:40,borderWidth:1,marginVertical:20}} placeholder="Password" />
+        <TextInput secureTextEntry onChangeText={setPassword} style={{width:null,height:40,borderWidth:1,marginVertical:20}} placeholder="Password" />
         <Button title="Login" onPress={() => login({email,password} , () => props.navigation.navigate("Home"))} />
         <TouchableOpacity onPress={() => props.navigation.navigate("Register")}>
             <Text>Create an account</Text>

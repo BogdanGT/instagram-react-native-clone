@@ -43,11 +43,13 @@ const Register = (props) => {
         style={{width:null,height:40,borderWidth:1,marginBottom:20}} 
         placeholder="Password" 
         onChangeText={setPassword}
+        secureTextEntry
     />
     <TextInput 
         style={{width:null,height:40,borderWidth:1,marginBottom:20}} 
         placeholder="Confirm Password"
         onChangeText={setConfirmPassword}
+        secureTextEntry
     />
     {file.uri && <Image source={{uri:file.uri}} style={{width:50,height:50}} />}
     <Button title="Pick a profile photo" onPress={() => uploadPhoto()} />

@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {View,FlatList,TouchableOpacity,Image,Dimensions} from 'react-native'
+import {View,FlatList,TouchableOpacity,Image,Dimensions, Text} from 'react-native'
 import {getAllPosts,apiLink} from '../context/helperFunctions'
 
 const {width} = Dimensions.get("window")
@@ -11,7 +11,8 @@ const Search = (props) => {
     useEffect(async () => {
         setPosts(await getAllPosts())
     },[])
-    return <View>
+    return <View style={{backgroundColor:"white",flex:1}}>
+        <Text style={{fontFamily:"Roboto-Bold",textAlign:"center",fontSize:20,marginBottom:20,marginTop:10}}>All posts</Text>
         <FlatList 
             data={posts.allPost}
             keyExtractor={el => el._id}

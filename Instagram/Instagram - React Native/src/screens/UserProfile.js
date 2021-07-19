@@ -19,13 +19,17 @@ const UserProfile = (props) => {
         setUserPosts(await getAllPostsFromUser(userId))
         setMe(await getUser())
         setToken(await getToken())
-    },[])
+    },[userId])
 
     const followBtn = () => {
         if(animFollow){
-            return <Button title="UNFOLLOW" onPress={async () => {followUser(userId,token);setAnimFollow(false)}} />
+            return <TouchableOpacity>
+                <Text onPress={async () => {followUser(userId,token);setAnimFollow(false)}} style={{backgroundColor:"#19b5fe",borderRadius:5,padding:5,color:"white",alignSelf:"flex-start",margin:5}}>UNFOLLOW</Text>
+            </TouchableOpacity>
         }else{
-            return <Button title="FOLLOW" onPress={async () => {followUser(userId,token);setAnimFollow(true)}} />
+            return <TouchableOpacity>
+                <Text onPress={async () => {followUser(userId,token);setAnimFollow(true)}} style={{backgroundColor:"#19b5fe",borderRadius:5,padding:5,color:"white",alignSelf:"flex-start",margin:5}}>FOLLOW</Text>
+            </TouchableOpacity> 
         }
     }
 
@@ -39,18 +43,31 @@ const UserProfile = (props) => {
         }
     },[me.followedPeople])
 
-    return <View>
-    <Text>{user.username}</Text>
-    <Image source={{uri:`${apiLink}/images/${user.profilePhoto}`}} style={{width:100,height:100,borderRadius:100}} />
-    <View style={{flexDirection:"row",justifyContent:"space-evenly"}}>
-        <Text>{userPosts.length} posts</Text>
-        <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowers" , {userId:user._id,meId:me._id})}>
-                <Text>{user.followers} urmaritori</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowed" , {userId:user._id,meId:me._id})}>
-                <Text>{user.following} urmariri</Text>
-            </TouchableOpacity>
-    </View>
+    return <View style={{backgroundColor:"white",flex:1}}>
+        <View style={{flexDirection:"row"}}>
+            <View>
+                <Image source={{uri:`${apiLink}/images/${user.profilePhoto}`}} style={{width:80,height:80,borderRadius:100,margin:10}} />
+                <Text style={{marginLeft:10}}>{user.username}</Text>
+            </View>
+            <View style={{flexDirection:"row",justifyContent:"space-around",flex:1,alignItems:"center",marginBottom:30,alignSelf:"center"}}>
+                <View style={{flexDirection:"column"}}>
+                    <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>{userPosts.length}</Text>
+                    <Text>posts</Text>
+                </View>
+                <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowers" , {userId:user._id})}>
+                <View style={{flexDirection:"column"}}>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>{user.followers}</Text>
+                        <Text>followers</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate("YourFollowed" , {userId:user._id})}>
+                    <View style={{flexDirection:"column"}}>
+                        <Text style={{textAlign:"center",fontWeight:"bold",fontSize:20}}>{user.following}</Text>
+                        <Text>following</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        </View>
     {followBtn()}
     <FlatList 
         numColumns={3}

@@ -1,11 +1,15 @@
 import createDataContext from './context'
 import api from '../api/api'
 import KeyChain from 'react-native-keychain'
+import { io } from 'socket.io-client'
 
 const reducer = (state,action) => {
     switch(action.type){
         case "register":
             return [...state , {title:"asdasdasd"}]
+        case "sendPhoto":
+            // console.log(action.payload)
+            return [...state , {filename:action.payload}]
     }
 }
 
@@ -52,7 +56,7 @@ const login = dispatch => {
 }
 
 const addPost = dispatch => {
-    return (value, token) => {
+    return (value, token,cb) => {
         const config = {
             headers: {
                 "Content-Type" :"application/json",
@@ -62,6 +66,7 @@ const addPost = dispatch => {
         console.log(token)
         const data = JSON.stringify(value)
         api.post("/post" , value, config)
+        cb()
     }
 }
 
@@ -122,7 +127,7 @@ const deleteComment = dispatch => {
 }
 
 const deletePost = dispatch => {
-    return (id,token) => {
+    return (id,token,cb) => {
         const config = {
             headers: {
                 "Content-Type" :"application/json",
@@ -132,7 +137,38 @@ const deletePost = dispatch => {
 
 
         api.delete(`/post/${id}`, config)
+        cb()
     }
 }
 
-export const {Context,Provider} = createDataContext(reducer, [] , {deletePost ,deleteComment,addComment,register,login,addPost,likePost,followUser})
+
+const sendPhotoConv = dispatch => {
+    return (data,userId,myPhoto,meId,token,cb,convIndex) => {
+        const config = {
+            headers: {
+                "Content-Type" :"application/json",
+                "x-auth-token" : token
+            }
+        }
+
+        // console.log(userId,file)
+        // const data = {userId,file}
+
+
+        api.post(`/auth/sendPhotoConv`,data, config).then(res => {
+            socket = io("http://192.168.0.220:4000")
+
+            // socket.emit("send-message" , {
+            //     userTo:userId,
+            //     image:res.data.filename,
+            //     photo:myPhoto,
+            //     meId,
+            //     convIndex
+            // })
+            cb(res.data.filename)
+        })
+    }
+
+}
+
+export const {Context,Provider} = createDataContext(reducer, [] , {sendPhotoConv,deletePost ,deleteComment,addComment,register,login,addPost,likePost,followUser})

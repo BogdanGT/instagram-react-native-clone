@@ -80,4 +80,4 @@ export const getUserProfile = async (id) => {
     return res.data.user
 }
 
-export const apiLink = "https://644c5d8f1f54.ngrok.io"
+export const apiLink = "http://192.168.0.220:8000"
